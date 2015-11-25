@@ -1,0 +1,98 @@
+{% load i18n %}
+<div class="col-md-8">
+    {% if twitter_error %}
+        <div class="alert alert-danger">
+            {% trans twitter_error %}
+        </div>
+    {% else %}
+    	<h1>{% trans "Twitter results" %}</h1>
+        <div class="list-group>">
+            {% for result in twitter_results %}
+                <li>
+                    <div class="list-group-item">
+                        <p>
+                            <img src="{{ result.user.profile_image_url }}"/>
+                            <strong>{{ result.user.name }}</strong>
+                        </p>
+                        <a href="https://twitter.com/statuses/{{ result.id_str }}" target="_blank">{{ result.text }}</a>
+                    </div>
+                </li>
+            {% empty %}
+                <div class="alert alert-warning">
+                    <p>{% trans "No Twitter results" %}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <nav>
+            <ul class="pagination">
+                <li>
+                    {% if twitter_results.has_previous %}
+                        <a href="?query={{ query }}&{% if sct %}search_criteria=T&{% endif %}{% if scw %}search_criteria=W&{% endif %}{% if page_wikipedia %}page_wikipedia={{ page_wikipedia }}&{% endif %}page_twitter={{ twitter_results.previous_page_number }}">{% trans "previous" %}</a>
+                    {% endif %}
+                </li>
+
+                <li>
+                    <span class="current">
+                        {% trans Page %} {{ twitter_results.number }} {% trans "of" %} {{ twitter_results.paginator.num_pages }}.
+                    </span>
+                </li>
+                
+                <li>
+                   {% if twitter_results.has_next %}
+                    <a href="
+                        ?query={{ query }}&{% if sct %}search_criteria=T&{% endif %}{% if scw %}search_criteria=W&{% endif %}{% if page_wikipedia %}page_wikipedia={{ page_wikipedia }}&{% endif %}page_twitter={{ twitter_results.next_page_number }}">
+                        {% trans "next" %}</a>
+                {% endif %}
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+
+
+<div class="col-md-6">
+    {% if wikipedia_error %}
+        <div class="alert alert-danger">
+            {% trans wikipedia_error %}
+        </div>
+    {% else %}
+        <h1>{% trans "Wikipedia results" %}</h1>
+        <div class="list-group">
+            {% for result in wikipedia_results %}
+                <li>
+                    <a class="list-group-item" href="https://en.wikipedia.org/wiki/{{ result|iriencode }}" 
+                        target="_blank">
+                        {{ result }}
+                    </a>
+                </li>
+            {% empty %}
+                <div class="alert alert-warning">
+                    <p>{% trans "No Wikipedia results" %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    <nav>
+        <ul class="pagination">
+            <li>
+                {% if wikipedia_results.has_previous %}
+                    <a href="?query={{ query }}&{% if sct %}search_criteria=T&{% endif %}{% if scw %}search_criteria=W&{% endif %}{% if page_twitter %}page_twitter={{ page_twitter }}&{% endif %}page_wikipedia={{ wikipedia_results.previous_page_number }}">{% trans "previous" %}</a>
+                {% endif %}
+            </li>
+
+            <li>
+                <span class="current">
+                    {% trans Page %} {{ wikipedia_results.number }} {% trans "of" %} {{ wikipedia_results.paginator.num_pages }}.
+                </span>
+            </li>
+            
+            <li>
+               {% if wikipedia_results.has_next %}
+                <a href="
+                    ?query={{ query }}&{% if sct %}search_criteria=T&{% endif %}{% if scw %}search_criteria=W&{% endif %}{% if page_twitter %}page_twitter={{ page_twitter }}&{% endif %}page_wikipedia={{ wikipedia_results.next_page_number }}">
+                    {% trans "next" %}</a>
+            {% endif %}
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+</div>

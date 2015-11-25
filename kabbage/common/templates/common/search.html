@@ -1,0 +1,22 @@
+{% extends 'common/base.html' %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{% trans "Search" %}</h1>
+            <form action="{% url 'common:search' %}" method="get">
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-success">{% trans "Search results" %}</button>
+                {% endbuttons %}
+            </form>
+        </div><!-- col-md -->
+    </div><!-- row -->
+    {% include 'common/search_results.html' %}
+</div><!-- container -->
+
+{% endblock %}

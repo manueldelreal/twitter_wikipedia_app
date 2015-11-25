@@ -1,0 +1,31 @@
+{% load i18n %}
+<div id="navigation-bar" class="container">
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button><!-- navbar-toggle -->
+            <a class="navbar-brand" href="{% url 'common:index' %}">Kabbage</a>
+        </div><!-- navbar-header -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="navbar-form" action="{% url 'common:search' %}" method="get">
+                        <div class="form-group">
+                            <input 
+                                type="text" class="form-control"
+                                required="true" name="query"
+                                placeholder="Enter your search here">
+                            <input type="hidden" name="search_criteria" value="T">
+                            <input type="hidden" name="search_criteria" value="W">
+                        </div>
+                        <button type="submit" class="btn btn-default">{% trans "Search" %}</button>
+                    </form>
+                </li>
+            </ul><!-- navbar-nav -->
+        </div><!-- nav-collapse -->
+    </div><!-- navbar -->
+</div><!-- container -->
